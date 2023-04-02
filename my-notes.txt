@@ -1,0 +1,11 @@
+C:\Program` Files\MongoDB\Server\6.0\bin
+
+.\mongod --dbpath C:\Users\kydda\OneDrive\桌面\My_Codes\my-first-react-app-backend\mongo-db-data
+
+database name: react-db
+
+use react-db
+
+db.articles.find({name: 'learn-react'}).pretty()
+
+npm install mongodb

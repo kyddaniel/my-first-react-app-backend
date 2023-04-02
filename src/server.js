@@ -1,4 +1,5 @@
 import express from 'express';
+import { MongoClient } from 'mongodb';
 
 let articlesInfo = [{
     name: 'learn-react',
@@ -16,6 +17,27 @@ let articlesInfo = [{
 
 const app = express();
 app.use(express.json());
+
+app.get('/api/articles/:name', async (req, res) => {
+    const { name } = req.params;
+
+    const { client } = new MongoClient('mongodb://localhost:27017?authSource=admin');
+    
+    //if(client) {
+        await client.connect();
+
+        const db = client.db('react-db');
+        
+        const article = await db.collection('articles').findOne({ name });
+
+        if(article) {
+            res.json(article);
+        } else {
+            res.sendStatus(404).send('Article not found');
+        }
+    //}
+
+});
 
 app.put('/api/articles/:name/upvote', (req, res) => {
     const { name } = req.params;
